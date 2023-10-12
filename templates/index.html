@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title> 
+    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet" />
+</head>
+
+<body>
+    <video autoplay muted loop id="myVideo">
+        <source src="https://vod-progressive.akamaized.net/exp=1697157470~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F2122%2F16%2F410610193%2F1762431463.mp4~hmac=8662cb8b6c8ee008bc87c38dbab1756df754f0b42df5b51006c6258c82a5a173/vimeo-prod-skyfire-std-us/01/2122/16/410610193/1762431463.mp4?filename=file.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+        <h1>Welcome to QR Code Generator!</h1> 
+        <br> <!-- Added a line break to create a gap -->
+        <form id="qrForm">
+            <input type="text" name="text" id="text" placeholder="Enter text for QR code" required />
+            <button type="submit">Generate QR Code</button>
+        </form>
+        {% if img_b64 %}
+            <div id="qrcode">
+                <img src="data:image/png;base64,{{img_b64}}" alt="QR Code">
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script>
+        var form = document.getElementById('qrForm');
+        var textInput = document.getElementById('text');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var text = textInput.value;
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'text=' + encodeURIComponent(text)
+            })
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(data) {
+                document.open();
+                document.write(data);
+                document.close();
+            });
+        });
+    </script>
+</body>
+
+</html>
