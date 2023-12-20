@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from waitress import serve
 import qrcode
+from PIL import Image
 from io import BytesIO
 from base64 import b64encode
 
@@ -24,7 +25,21 @@ def generate():
     qr.add_data(text)
     qr.make(fit=True)
     
-    img = qr.make_image(fill_color="white", back_color="transparent")  # Changed colors here
+    img = qr.make_image(fill_color="#000000", back_color="#CBDCCB")  # Create QR code with white background
+    
+    img = img.convert("RGBA")  # Convert the image to RGBA format
+    datas = img.getdata()  # Get image data
+
+    new_data = []
+    for item in datas:
+        # change all white (also shades of whites)
+        # pixels to transparent
+        if item[0] in list(range(200, 256)):
+            new_data.append((255, 255, 255, 128))  # adding transparency
+        else:
+            new_data.append(item)
+            
+    img.putdata(new_data)  # Update image data
     
     byte_io = BytesIO()
     img.save(byte_io, 'PNG')
