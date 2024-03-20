@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator</title> 
-    <link href="{{ url_for('static', filename='styles/style.css') }}" rel="stylesheet" />
+    <link href="../static/styles/style.css" rel="stylesheet" />
 </head>
 
 <body>
+    <video id = "myVideo" autoplay muted loop>
+        <source src="../static/STAR.mp4" type="video/mp4">
+    </video>
     <div class="container">
         <h1>Welcome to QR Code Generator!</h1> 
         <br>
