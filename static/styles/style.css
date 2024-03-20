@@ -7,7 +7,7 @@
 
 body {
     padding: 2rem;
-    background-color: #121212; /* Dark background color */
+    background: url(../../templates/STAR.mp4);
     color: #FFFFFF; /* White text color */
     min-height: 100vh;
     display: flex;
