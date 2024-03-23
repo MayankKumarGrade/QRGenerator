@@ -40,6 +40,9 @@ def generate():
             new_data.append(item)
             
     img.putdata(new_data)  # Update image data
+
+    # Resize the image to a fixed size (e.g., 200x200 pixels)
+    img = img.resize((300, 300), Image.LANCZOS)
     
     byte_io = BytesIO()
     img.save(byte_io, 'PNG')
